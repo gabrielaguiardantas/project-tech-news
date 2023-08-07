@@ -1,5 +1,6 @@
 import requests
 import time
+import re
 from parsel import Selector
 
 
@@ -29,14 +30,34 @@ def scrape_updates(html_content):
 
 # Requisito 3
 def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    selector = Selector(html_content)
+    next_page_button = selector.css(".next.page-numbers::attr(href)").get()
+    if next_page_button:
+        return next_page_button
+    return None
 
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    selector = Selector(html_content)
+    pattern = re.compile("<.*?>")
+    remove_htmls = re.sub(pattern, "", selector.css("p").get())
+    news = {
+        "url": selector.css("[rel='canonical']::attr(href)").get(),
+        "title": selector.css(".entry-title::text").get().strip(),
+        "timestamp": selector.css(".meta-date::text").get(),
+        "writer": selector.css(".url.fn.n::text").get(),
+        "reading_time": int(
+            "".join(
+                filter(
+                    str.isdigit, selector.css(".meta-reading-time::text").get()
+                )
+            )
+        ),
+        "summary": remove_htmls.strip(),
+        "category": selector.css(".label::text").get(),
+    }
+    return news
 
 
 # Requisito 5
