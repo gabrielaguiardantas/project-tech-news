@@ -8,4 +8,4 @@
 
  ## Features implementadas: ##
 
- 
+ ![Captura de tela de 2023-08-10 09-55-15](https://github.com/gabrielaguiardantas/project-tech-news/assets/110852595/22a2ef56-54b4-41c1-a947-e82fd7b51e75)
