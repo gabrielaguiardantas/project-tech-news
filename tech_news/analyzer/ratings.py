@@ -11,8 +11,8 @@ def top_5_categories():
     categories_counter = Counter(categories_list)
     categories_top_5 = sorted(
         categories_counter.most_common(5), key=lambda item: (-item[1], item[0])
-    )
+    )  # filter with five most common categories and sort by alphabetical order
     top_5_categories_list = [
         k for k, v in categories_top_5 if categories_top_5.index((k, v)) < 5
-    ]
+    ]  # show only the category name
     return top_5_categories_list
